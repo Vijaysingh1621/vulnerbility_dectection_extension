@@ -1,0 +1,43 @@
+{
+  "name": "vulnerabilityscanner",
+  "displayName": "Vulnerability Scanner",
+  "description": "Real-time detection and prevention of vulnerabilities in code.",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.78.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vulnerabilityscanner.scan",
+        "title": "Scan for Vulnerabilities"
+      }
+    ],
+    "languages": [
+      {
+        "id": "javascript",
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "aliases": ["JavaScript", "TypeScript"]
+      }
+    ],
+    "codeActions": [
+      {
+        "language": "javascript",
+        "actions": ["quickfix"]
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "vscode:prepublish": "npm run compile"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/vscode": "^1.78.0",
+    "typescript": "^4.5.0"
+  }
+}
