@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.activate = activate;
-exports.deactivate = deactivate;
+exports.deactivate = exports.activate = void 0;
 const vscode = require("vscode");
 const scanner_1 = require("./scanner");
 const fixProvider_1 = require("./fixProvider");
@@ -38,5 +37,7 @@ function activate(context) {
     const quickFixProvider = vscode.languages.registerCodeActionsProvider({ language: 'javascript', scheme: 'file' }, fixProvider_1.provideQuickFix);
     context.subscriptions.push(scanCommand, diagnosticCollection, quickFixProvider);
 }
+exports.activate = activate;
 function deactivate() { }
+exports.deactivate = deactivate;
 //# sourceMappingURL=extension.js.map

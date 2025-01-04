@@ -1,29 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.analyzeCode = analyzeCode;
+exports.analyzeCode = void 0;
+const owaspRules_1 = require("./rules/owaspRules");
+const sansRules_1 = require("./rules/sansRules");
+const businessLogic_1 = require("./rules/businessLogic");
+const emergingThreats_1 = require("./rules/emergingThreats");
 function analyzeCode(code) {
     const issues = [];
-    const lines = code.split('\n');
-    lines.forEach((line, index) => {
-        if (line.includes('eval(')) {
-            issues.push({
-                line: index,
-                message: 'Avoid using eval(). This can lead to code injection attacks.',
-            });
-        }
-        if (line.match(/res\.send\((.*?)\+/)) {
-            issues.push({
-                line: index,
-                message: 'Potential XSS vulnerability detected. Avoid concatenating user input directly.',
-            });
-        }
-        if (line.includes('innerHTML')) {
-            issues.push({
-                line: index,
-                message: 'Avoid using innerHTML. This can lead to DOM-based XSS.',
-            });
-        }
-    });
+    // OWASP Top 10 Detection
+    issues.push(...(0, owaspRules_1.detectOWASP)(code));
+    // SANS Top 25 Detection
+    issues.push(...(0, sansRules_1.detectSANS)(code));
+    // Business Logic Vulnerabilities
+    issues.push(...(0, businessLogic_1.detectBusinessLogic)(code));
+    // Emerging Threats
+    issues.push(...(0, emergingThreats_1.detectEmergingThreats)(code));
     return issues;
 }
+exports.analyzeCode = analyzeCode;
 //# sourceMappingURL=scanner.js.map
